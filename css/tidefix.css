@@ -1,0 +1,56 @@
+/* =========================================================
+   tidefix.css — hero 背景图 / 代码自适应 / 头像修正
+   ========================================================= */
+
+/* ---------- hero：官方潮汐背景 + 官方立绘 ---------- */
+.hero-bg{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:24% 46%;
+  z-index:0;user-select:none;pointer-events:none;
+}
+.hero-visual{background:#060a14;isolation:isolate}
+.hero-girl{z-index:3}
+.hero-xl .hero-actions{z-index:5}
+
+/* ---------- 右上角状态卡：头像不再被裁 ---------- */
+.mm-face{flex:0 0 58px;width:58px;height:58px;overflow:hidden;border-radius:50%;
+  box-shadow:0 0 0 1px rgba(79,209,232,.22),0 6px 20px -8px rgba(0,0,0,.8);
+}
+.mm-face img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.mascot-card{padding:0;overflow:hidden}
+.mm-row{padding:13px 14px}
+
+/* ---------- 代码：不出现横向滚动条 ---------- */
+.code-pane{overflow-x:hidden}
+.code-pane .cl{font-size:var(--fs,12.2px)}
+.code-pane .cd{white-space:pre;overflow:hidden;text-overflow:clip}
+.code-pane pre.code{white-space:pre;overflow-x:hidden;font-size:var(--fs,12.2px)}
+.code-pane .blank{font-size:inherit}
+
+/* ---------- 点击反馈 ---------- */
+@keyframes rowPulse{
+  0%{background:rgba(79,209,232,.34)}
+  100%{background:transparent}
+}
+.cl.pulse{animation:rowPulse .5s var(--ease)}
+.cl{cursor:pointer}
+.cl:hover .cd{color:#eaf6ff}
+
+/* ---------- 右栏氛围图 ---------- */
+.bg-whale{
+  background-size:cover;background-position:center bottom;
+  opacity:.20;filter:saturate(1.1);
+  -webkit-mask-image:radial-gradient(130% 110% at 75% 100%,#000 10%,rgba(0,0,0,.45) 55%,transparent 82%);
+  mask-image:radial-gradient(130% 110% at 75% 100%,#000 10%,rgba(0,0,0,.45) 55%,transparent 82%);
+  animation:none;transform:none;
+}
+
+.hero-main{position:relative;z-index:3}
+.hero-no{z-index:2}
+
+/* 控制条一行放得下 */
+.viz-ctrl.compact{flex-wrap:nowrap;gap:5px}
+.viz-ctrl.compact .btn-pill{padding:6px 8px;flex:0 0 auto}
+.viz-ctrl.compact [data-v="play"] span{display:none}
+.viz-ctrl.compact .seek{min-width:52px;flex:1 1 auto}
+.viz-ctrl.compact .stepnum{min-width:38px;font-size:10px}

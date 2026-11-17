@@ -1,0 +1,36 @@
+# Python 打包中间产物（build.bat 生成，不需要入库）
+build/
+dist/
+*.spec.bak
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 审计脚本输出的 JSON 报告（每次跑都会变，不入库）
+_audit.json
+_audit2.json
+_audit3.json
+_miss.json
+_arith.json
+_consist.json
+_delta.json
+_verify.json
+_final.json
+_blank_audit.json
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+*~
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 依赖（本项目零运行时依赖，仅构建期需要）
+node_modules/
+.pnpm-store/
+
+# 临时截图
+/screenshot*.png
+/tmp/

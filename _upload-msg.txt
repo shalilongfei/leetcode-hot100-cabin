@@ -1,0 +1,17 @@
+feat: LeetCode Hot 100 review workstation with debugger-grade visualization
+
+100 problems, each with a frame-by-frame execution trace instead of the
+usual guess-the-line-from-a-step-index animation.
+
+- 3853 frames / 869 loop wrap-arounds, every line number resolved by lookup
+- code<->viz linked both ways: click a line to jump, playback highlights the line
+- variable panel that grows with execution (no forward leaking)
+- call-stack capsules for all 21 recursion problems
+- C++ by default, one-key switch to Python3
+- four modes: learn / spaced-repetition review / timed drill / dashboard
+- six independent audit layers, all at zero
+- onedir exe for double-click use, plus start.bat for source mode
+
+Audit scripts are path-independent: they resolve the repo through
+_lib/load.js instead of a hardcoded absolute path, so a fresh clone runs
+them with no setup.

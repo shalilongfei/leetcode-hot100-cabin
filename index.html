@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Hot 100 · 热题通关舱</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#05070f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23070b16'/><path d='M6 20c3-6 9-9 14-7 3 1 4 3 6 3-1 2-3 3-3 5-4 4-12 4-17-1z' fill='%2338bdf8'/><circle cx='20' cy='14' r='1.4' fill='%23050810'/></svg>">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/sci.css">
+<link rel="stylesheet" href="css/scene.css">
+<link rel="stylesheet" href="css/split.css">
+<link rel="stylesheet" href="css/tidefix.css">
+<link rel="stylesheet" href="css/ux.css">
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true"><defs>
+  <linearGradient id="gRing" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4fd1e8"/><stop offset="1" stop-color="#a78bfa"/>
+  </linearGradient>
+  <linearGradient id="gradRing" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#4fd1e8"/><stop offset=".55" stop-color="#5b8cff"/><stop offset="1" stop-color="#a78bfa"/>
+  </linearGradient>
+</defs></svg>
+
+<div class="aurora" aria-hidden="true"></div>
+
+<div class="tide" aria-hidden="true">
+  <svg class="tw-b" viewBox="0 0 2880 220" preserveAspectRatio="none">
+    <path d="M0 172 C 140 140 260 196 400 168 S 660 132 800 168 S 1080 200 1200 168 S 1360 140 1440 168 L1440 220 L0 220 Z" fill="rgba(29,78,216,.16)"/>
+    <path d="M0 172 C 140 140 260 196 400 168 S 660 132 800 168 S 1080 200 1200 168 S 1360 140 1440 168 L1440 220 L0 220 Z" fill="rgba(29,78,216,.16)" transform="translate(1440,0)"/>
+  </svg>
+  <svg class="tw-a" viewBox="0 0 2880 220" preserveAspectRatio="none">
+    <path d="M0 138 C 120 96 240 96 360 138 S 600 180 720 138 S 960 96 1080 138 S 1320 180 1440 138" fill="none" stroke="rgba(79,209,232,.18)" stroke-width="1.2"/>
+    <path d="M0 138 C 120 96 240 96 360 138 S 600 180 720 138 S 960 96 1080 138 S 1320 180 1440 138" fill="none" stroke="rgba(79,209,232,.18)" stroke-width="1.2" transform="translate(1440,0)"/>
+  </svg>
+</div>
+
+<div class="bg-whale" id="bgWhale" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="ghost-btn fold-btn" id="btnFold" title="隐藏 / 显示题库  [">☰</button>
+  <div class="brand">
+    <div class="brand-mark" id="brandMascot"></div>
+    <div class="brand-txt">
+      <b>Hot&nbsp;100</b>
+      <span>热题通关舱</span>
+    </div>
+  </div>
+
+  <div class="hud" id="hud" title="当前题在 Hot 100 中的位置">
+    <div class="hud-k">SEQ</div>
+    <div class="hud-v"><b id="hudNow">001</b><span>/100</span></div>
+    <div class="hud-bar"><i id="hudBar"></i></div>
+  </div>
+
+  <nav class="tabs" id="tabs">
+    <button data-view="learn" class="on"><i data-ico="book"></i>学习</button>
+    <button data-view="review"><i data-ico="repeat"></i>复习</button>
+    <button data-view="drill"><i data-ico="dice"></i>抽考</button>
+    <button data-view="stats"><i data-ico="chart"></i>看板</button>
+  </nav>
+
+  <div class="topbar-right">
+    <button class="ghost-btn fold-btn" id="btnFoldR" title="隐藏 / 显示右栏  ]">▥</button>
+    <div class="streak" id="streakPill" title="连续复习天数">
+      <i data-ico="flame"></i><span id="streakNum">0</span>
+    </div>
+    <button class="ghost-btn" id="btnPalette" title="命令面板  ⌘K"><span>⌘K</span></button>
+    <button class="ghost-btn" id="btnReset" title="重置全部进度">重置</button>
+  </div>
+</header>
+
+<main class="layout">
+
+  <aside class="side" id="side">
+    <div class="side-top">
+      <div class="search-wrap">
+        <i data-ico="search"></i>
+        <input id="search" type="search" placeholder="搜题号 / 中文名 / 英文名 / 标签" autocomplete="off" spellcheck="false">
+        <kbd>/</kbd>
+      </div>
+      <div class="side-progress">
+        <div class="sp-ring" id="spRing"></div>
+        <div class="sp-txt">
+          <b id="spDone">0</b><span>/ 100 已通关</span>
+          <em id="spMeta">0 已掌握 · 0 待复习</em>
+        </div>
+      </div>
+      <div class="chips" id="diffChips">
+        <button class="chip on" data-diff="all">全部</button>
+        <button class="chip" data-diff="easy">简单</button>
+        <button class="chip" data-diff="medium">中等</button>
+        <button class="chip" data-diff="hard">困难</button>
+        <button class="chip" data-diff="due" title="今天该复习的">待复习</button>
+        <button class="chip" data-diff="wrong" title="标记过不会的">错题</button>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+  </aside>
+
+  <section class="stage" id="stage"></section>
+
+  <aside class="rail" id="rail">
+    <div class="mascot-card" id="mascotCard"></div>
+    <div class="rail-block" id="railToday"></div>
+    <div class="rail-block" id="railHeat"></div>
+  </aside>
+</main>
+
+<div class="palette" id="palette" hidden>
+  <div class="palette-box">
+    <div class="palette-input">
+      <i data-ico="search"></i>
+      <input id="paletteInput" placeholder="跳转到题目 / 执行命令…" autocomplete="off" spellcheck="false">
+      <kbd>ESC</kbd>
+    </div>
+    <div class="palette-list" id="paletteList"></div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="pmask" id="pmask" hidden>
+  <div class="pmodal" role="dialog" aria-modal="true">
+    <div class="pm-head">
+      <span class="pm-no" id="pmNo">No.42</span>
+      <h3 id="pmTitle">接雨水</h3>
+      <span class="tag" id="pmDiff">困难</span>
+      <button class="icon-btn pm-x" id="pmClose" aria-label="关闭">✕</button>
+    </div>
+    <div class="pm-body" id="pmBody"></div>
+    <div class="pm-foot">
+      <a class="btn-pill primary" id="pmLink" target="_blank" rel="noreferrer">去力扣看完整题面 ↗</a>
+      <span class="pm-tip">题目摘要仅供快速回忆，规范表述以力扣原题为准</span>
+    </div>
+  </div>
+</div>
+
+<script src="js/data/p1.js"></script>
+<script src="js/data/p2.js"></script>
+<script src="js/data/p3.js"></script>
+<script src="js/data/p4.js"></script>
+<script src="js/data/cpp1.js"></script>
+<script src="js/data/cpp2.js"></script>
+<script src="js/data/cpp3.js"></script>
+<script src="js/data/index.js"></script>
+<script src="js/data/blank.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/mascots.js"></script>
+<script src="js/highlight.js"></script>
+<script src="js/viz/engine.js"></script>
+<script src="js/viz/traces.js"></script>
+<script src="js/viz/headfix.js"></script>
+<script src="js/viz/env.js"></script>
+<script src="js/viz/exact.js"></script>
+<script src="js/viz/exact2.js"></script>
+<script src="js/viz/exact3.js"></script>
+<script src="js/viz/exact4.js"></script>
+<script src="js/viz/exact5.js"></script>
+<script src="js/viz/exact6.js"></script>
+<script src="js/viz/exact7.js"></script>
+<script src="js/viz/linefix.js"></script>
+<script src="js/viz/dbg0.js"></script>
+<script src="js/viz/dbg1.js"></script>
+<script src="js/viz/dbg2.js"></script>
+<script src="js/viz/dbg3.js"></script>
+<script src="js/viz/dbg4.js"></script>
+<script src="js/viz/dbg5.js"></script>
+<script src="js/viz/dbg6.js"></script>
+<script src="js/viz/dbgR.js"></script>
+<script src="js/viz/dbgR2.js"></script>
+<script src="js/viz/dbgR3.js"></script>
+<script src="js/viz/dbgFix.js"></script>
+<script src="js/viz/dbgFix2.js"></script>
+<script src="js/viz/dbgFix3.js"></script>
+<script src="js/viz/dbgFix4.js"></script>
+<script src="js/viz/dbgFix5.js"></script>
+<script src="js/viz/dbgFix6.js"></script>
+<script src="js/viz/dbgFix7.js"></script>
+<script src="js/viz/dbgFix8.js"></script>
+<script src="js/store.js"></script>
+<script src="js/views/learn.js"></script>
+<script src="js/views/review.js"></script>
+<script src="js/views/drill.js"></script>
+<script src="js/views/stats.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

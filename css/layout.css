@@ -1,0 +1,31 @@
+/* =========================================================
+   layout.css — 左右两栏收纳
+   ========================================================= */
+
+.fold-btn{font-size:14px;line-height:1;padding:6px 9px;opacity:.75}
+.fold-btn:hover{opacity:1}
+
+/* 右栏收起 */
+.layout.rail-hidden{grid-template-columns:304px minmax(0,1fr) 0}
+.layout.rail-hidden .rail{
+  width:0 !important;min-width:0;padding:0;border:0;
+  opacity:0;pointer-events:none;overflow:hidden;
+}
+
+/* 两侧都收起 → 单列，代码区占满 */
+.layout.side-hidden.rail-hidden{grid-template-columns:0 minmax(0,1fr) 0}
+.layout.side-hidden.rail-hidden .stage{padding-left:20px;padding-right:20px}
+
+@media (max-width:1400px){
+  .layout.rail-hidden{grid-template-columns:276px minmax(0,1fr) 0}
+}
+@media (max-width:1180px){
+  .layout.rail-hidden{grid-template-columns:260px minmax(0,1fr)}
+  .layout.side-hidden.rail-hidden{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:820px){
+  .layout.rail-hidden{grid-template-columns:minmax(0,1fr)}
+}
+
+/* 双栏展开时代码字号可更大 */
+.layout.side-hidden.rail-hidden .split-body{height:min(72vh,700px)}

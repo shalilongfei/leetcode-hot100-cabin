@@ -1,0 +1,105 @@
+/* =========================================================
+   ux.css — 侧栏折叠 / 题目弹窗 / 输入说明 / 结构体
+   ========================================================= */
+
+/* ---------- 折叠 ---------- */
+.fold-btn{font-size:15px;line-height:1;padding:6px 10px}
+.layout.side-hidden{grid-template-columns:0 minmax(0,1fr) 316px}
+.layout.side-hidden .side{
+  width:0 !important;min-width:0;padding:0;border:0;
+  opacity:0;pointer-events:none;overflow:hidden;
+}
+.layout.side-hidden .stage{padding-left:18px}
+@media (max-width:1180px){
+  .layout.side-hidden{grid-template-columns:minmax(0,1fr)}
+  .layout.side-hidden .rail{display:none}
+}
+
+/* ---------- 题目弹窗 ---------- */
+.pmask{
+  position:fixed;inset:0;z-index:90;display:grid;place-items:center;
+  background:rgba(2,5,12,.74);backdrop-filter:blur(6px);
+  animation:pmFade .22s var(--ease);
+}
+.pmask[hidden]{display:none !important}
+@keyframes pmFade{from{opacity:0}to{opacity:1}}
+.pmodal{
+  width:min(680px,92vw);max-height:82vh;display:flex;flex-direction:column;
+  border-radius:20px;border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg,rgba(16,24,44,.98),rgba(9,13,26,.99));
+  box-shadow:0 40px 90px -40px #000,inset 0 1px 0 rgba(255,255,255,.08);
+  animation:pmIn .28s var(--ease);
+}
+@keyframes pmIn{from{opacity:0;transform:translateY(-12px) scale(.985)}to{opacity:1;transform:none}}
+.pm-head{display:flex;align-items:center;gap:12px;padding:20px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.pm-no{font-family:var(--mono);font-size:11px;color:var(--cyan);border:1px solid rgba(79,209,232,.3);
+  background:rgba(79,209,232,.1);border-radius:7px;padding:3px 8px}
+.pm-head h3{font-size:19px;font-weight:700;letter-spacing:-.02em;margin:0}
+.pm-x{margin-left:auto;width:30px;height:30px;font-size:13px}
+.pm-body{padding:20px 22px;overflow-y:auto;font-size:13.4px;line-height:1.85;color:#c9d6ee}
+.pm-body h4{font-size:11px;letter-spacing:.16em;color:#5c7fa0;text-transform:uppercase;
+  margin:18px 0 8px;font-weight:600}
+.pm-body h4:first-child{margin-top:0}
+.pm-body p{margin:0 0 10px}
+.pm-body code,.pm-body .mono{font-family:var(--mono);font-size:12.4px;color:#9fe9f7}
+.pm-body pre{
+  margin:0 0 10px;padding:12px 14px;border-radius:10px;overflow-x:auto;
+  background:rgba(3,7,16,.7);border:1px solid rgba(255,255,255,.07);
+  font-family:var(--mono);font-size:12.2px;line-height:1.8;color:#c6d4ea;
+}
+.pm-body ol,.pm-body ul{margin:0;padding-left:20px}
+.pm-body li{margin-bottom:6px}
+.pm-foot{display:flex;align-items:center;gap:14px;padding:14px 22px 20px;border-top:1px solid rgba(255,255,255,.07)}
+.pm-tip{font-size:11px;color:#4a5f7d}
+
+/* ---------- 可视化输入说明 ---------- */
+.viz-input{
+  display:flex;gap:8px;align-items:flex-start;
+  padding:9px 12px;border-radius:10px;margin-bottom:2px;
+  background:rgba(79,209,232,.06);border:1px solid rgba(79,209,232,.16);
+  font-family:var(--mono);font-size:11.5px;line-height:1.7;color:#a9c6e0;
+  max-height:74px;overflow:auto;
+}
+.viz-input b{
+  flex:0 0 auto;color:#9fe9f7;font-weight:600;letter-spacing:.06em;
+  font-family:var(--font);font-size:10.5px;padding-top:1px;
+}
+.viz-input span{white-space:pre-wrap;word-break:break-word}
+
+/* ---------- 结构体定义块 ---------- */
+.struct-block{
+  margin:0 0 10px;border-radius:10px;overflow:hidden;
+  background:rgba(4,9,20,.6);border:1px solid rgba(255,255,255,.06);
+  border-left:2px solid rgba(167,139,250,.5);
+}
+.struct-block summary{
+  cursor:pointer;padding:7px 12px;font-family:var(--mono);font-size:11px;
+  color:#a78bfa;letter-spacing:.04em;user-select:none;list-style:none;
+}
+.struct-block summary::-webkit-details-marker{display:none}
+.struct-block summary::before{content:"▸ ";opacity:.7}
+.struct-block[open] summary::before{content:"▾ "}
+.struct-block pre{
+  margin:0;padding:6px 14px 12px;font-family:var(--mono);font-size:11.6px;
+  line-height:1.85;color:#8fa3c4;overflow-x:auto;white-space:pre;
+}
+
+/* ---------- 题目按钮 ---------- */
+.hero-actions .icon-btn[data-act="problem"]{color:#ffd48a;border-color:rgba(255,196,92,.3)}
+.hero-actions .icon-btn[data-act="problem"]:hover{background:rgba(255,196,92,.14);color:#ffe6b8}
+
+
+/* ---------- 左列：结构体 + 代码 ---------- */
+.code-col{
+  display:flex;flex-direction:column;min-width:0;min-height:0;
+  border-right:1px solid rgba(255,255,255,.07);
+  background:linear-gradient(180deg,rgba(4,8,18,.72),rgba(6,11,24,.6));
+}
+.code-col .struct-host:empty{display:none}
+.code-col .struct-host{padding:10px 12px 0;flex:0 0 auto}
+.code-col .code-pane{border-right:0;flex:1;min-height:0}
+.split-body .code-pane{border-right:0}
+@media (max-width:1180px){
+  .code-col{border-right:0;border-bottom:1px solid rgba(255,255,255,.07)}
+  .code-col .code-pane{max-height:300px}
+}
